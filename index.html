@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arkadius Thoma · navotec.de</title>
+  <meta name="description" content="Persönliche Website von Arkadius Thoma – IT Berater und Softwareentwickler mit Schwerpunkt ERP, Logistik und Azure Cloud, Nonnenhorn am Bodensee." />
+  <meta name="keywords" content="Arkadius Thoma, IT Consultant, Entwickler, ERP, eEvolution, C#, SQL Server, Azure, Bodensee" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arkadius Thoma · navotec.de" />
+  <meta property="og:description" content="IT Berater & Softwareentwickler · ERP & Logistik · Azure Cloud · Bodensee" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.navotec.de/" />
+  <meta property="og:image" content="foto.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons: Tabler -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:        #BA7517;
+      --orange-light:  #FAEEDA;
+      --orange-mid:    #FAC775;
+      --orange-dark:   #854F0B;
+      --text-primary:  #1a1a18;
+      --text-secondary:#5f5e5a;
+      --border:        rgba(0,0,0,0.1);
+      --bg:            #ffffff;
+      --bg-secondary:  #f8f7f4;
+      --radius:        12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary:  #f0ede6;
+        --text-secondary:#a09e98;
+        --border:        rgba(255,255,255,0.1);
+        --bg:            #1c1b19;
+        --bg-secondary:  #252421;
+        --orange-light:  #2a1f08;
+        --orange-dark:   #FAC775;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      max-width: 800px;
+      margin: 0 auto;
+      border-left: 0.5px solid var(--border);
+      border-right: 0.5px solid var(--border);
+      min-height: 100vh;
+    }
+
+    /* ── Animations (scroll-triggered via IntersectionObserver) ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.in-view { opacity: 1; transform: translateY(0); }
+    .fade-up-1 { transition-delay: 0.05s; }
+    .fade-up-2 { transition-delay: 0.1s; }
+    .fade-up-3 { transition-delay: 0.1s; }
+    .fade-up-4 { transition-delay: 0.1s; }
+    .fade-up-5 { transition-delay: 0.1s; }
+    .fade-up-6 { transition-delay: 0.1s; }
+
+    /* ── Navigation ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .logo span { color: var(--orange); }
+
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* ── Shared section heading ── */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      padding: 3rem 2rem;
+      align-items: center;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 3px solid var(--orange-mid);
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 8%;
+    }
+
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .hero-text .role {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--orange-light);
+      color: var(--orange-dark);
+    }
+
+    /* ── Über mich ── */
+    .about {
+      padding: 2.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .about blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid var(--orange);
+      padding-left: 1rem;
+    }
+
+    .about p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .about .navo-note {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+    }
+
+    /* ── Skills ── */
+    .skills {
+      padding: 2.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .skill-group {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 0.5px solid var(--border);
+    }
+
+    .skill-group h3 {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-group ul { list-style: none; }
+
+    .skill-group li {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.9;
+    }
+
+    /* ── Sprachen ── */
+    .languages {
+      padding: 2.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .lang-list { display: flex; gap: 3rem; flex-wrap: wrap; }
+
+    .lang-item { display: flex; flex-direction: column; gap: 5px; }
+
+    .lang-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .lang-level {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-secondary);
+    }
+
+    .lang-dots { display: flex; gap: 5px; margin-top: 3px; }
+
+    .lang-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .lang-dot.filled { background: var(--orange); border-color: var(--orange); }
+
+    /* ── Zertifikate ── */
+    .certs {
+      padding: 2.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+    }
+
+    .cert-item i {
+      font-size: 18px;
+      color: var(--orange);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cert-item span {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ── Kontakt ── */
+    .contact {
+      padding: 2.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .contact-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .contact-row i {
+      font-size: 18px;
+      color: var(--orange);
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .contact-row a { color: var(--orange); text-decoration: none; }
+    .contact-row a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    footer p { font-size: 12px; color: var(--text-secondary); }
+
+    .footer-links { display: flex; gap: 1rem; }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── Mobile ── */
+    @media (max-width: 560px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1rem; }
+      .hero { grid-template-columns: 1fr; gap: 1.5rem; padding: 2rem 1.25rem; justify-items: center; text-align: center; }
+      .avatar { width: 140px; height: 140px; }
+      .hero-text h1 { font-size: 26px; }
+      .badges { justify-content: center; }
+      .about, .skills, .languages, .certs, .contact { padding: 2rem 1.25rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .lang-list { gap: 2rem; }
+      footer { padding: 1rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">navo<span>tec</span></a>
+    <ul class="nav-links">
+      <li><a href="#ueber-mich">Über mich</a></li>
+      <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero fade-up fade-up-1" id="ueber-mich">
+    <div class="avatar">
+      <img src="foto.jpg" alt="Arkadius Thoma" />
+    </div>
+    <div class="hero-text">
+      <h1>Arkadius Thoma</h1>
+      <p class="role">IT Berater &amp; Softwareentwickler &middot; Nonnenhorn, Bodensee</p>
+      <div class="badges">
+        <span class="badge">ERP / Logistik</span>
+        <span class="badge">C# / .NET</span>
+        <span class="badge">SQL Server / Oracle</span>
+        <span class="badge">Azure Cloud</span>
+        <span class="badge">Senior Consultant</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Über mich -->
+  <section class="about fade-up fade-up-2">
+    <blockquote>a rolling stone gathers no moss…</blockquote>
+    <p>
+      IT Berater und Entwickler mit über 30 Jahren Erfahrung im ERP- und Logistikumfeld —
+      davon drei Jahre in Shanghai, von dort aus für deutsche Unternehmen tätig.
+    </p>
+    <p>
+      Tätig als Senior Consultant &amp; Senior Software Developer bei der eEvolution
+      Vertrieb GmbH in Hildesheim. Privat am Bodensee zuhause — beim Wandern, Laufen
+      oder auf dem Badmintonplatz.
+    </p>
+    <p class="navo-note">
+      Navotec — vom lateinischen „navo": etwas eifrig betreiben. Mein Berufsmotto.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills fade-up fade-up-3">
+    <h2 class="section-heading">Skills &amp; Technologien</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Entwicklung</h3>
+        <ul>
+          <li>C# / .NET / ASP.NET</li>
+          <li>PowerShell</li>
+          <li>JavaScript / XML</li>
+          <li>EDI &amp; Schnittstellen</li>
+          <li>Scrum / Agile</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Datenbanken</h3>
+        <ul>
+          <li>SQL Server</li>
+          <li>Oracle</li>
+          <li>Azure SQL</li>
+          <li>T-SQL / PL/SQL</li>
+          <li>SSIS / Reporting</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Cloud &amp; Tools</h3>
+        <ul>
+          <li>Azure IaaS / PaaS</li>
+          <li>Azure DevOps / Git</li>
+          <li>eEvolution / Navision</li>
+          <li>SAP Schnittstellen</li>
+          <li>Projektmanagement</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sprachen -->
+  <section class="languages fade-up fade-up-4">
+    <h2 class="section-heading">Sprachen</h2>
+    <div class="lang-list">
+      <div class="lang-item">
+        <span class="lang-name">Deutsch</span>
+        <span class="lang-level">Muttersprache</span>
+        <div class="lang-dots">
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+        </div>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">Englisch</span>
+        <span class="lang-level">Fließend</span>
+        <div class="lang-dots">
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot"></span>
+        </div>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">Polnisch</span>
+        <span class="lang-level">Fließend</span>
+        <div class="lang-dots">
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot filled"></span>
+          <span class="lang-dot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zertifikate -->
+  <section class="certs fade-up fade-up-5">
+    <h2 class="section-heading">Zertifikate</h2>
+    <div class="cert-grid">
+      <div class="cert-item">
+        <i class="ti ti-certificate" aria-hidden="true"></i>
+        <span>Microsoft Azure Database Administrator Associate (DP-300)</span>
+      </div>
+      <div class="cert-item">
+        <i class="ti ti-certificate" aria-hidden="true"></i>
+        <span>Microsoft Azure Developer Associate (AZ-204)</span>
+      </div>
+      <div class="cert-item">
+        <i class="ti ti-certificate" aria-hidden="true"></i>
+        <span>Microsoft Azure Fundamentals (AZ-900)</span>
+      </div>
+      <div class="cert-item">
+        <i class="ti ti-certificate" aria-hidden="true"></i>
+        <span>Microsoft Dynamics 365 Fundamentals ERP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section class="contact fade-up fade-up-6" id="kontakt">
+    <h2 class="section-heading">Kontakt</h2>
+    <div class="contact-list">
+      <div class="contact-row">
+        <i class="ti ti-map-pin" aria-hidden="true"></i>
+        Mauthausstr. 13, 88149 Nonnenhorn
+      </div>
+      <div class="contact-row">
+        <i class="ti ti-mail" aria-hidden="true"></i>
+        <a href="mailto:athoma@navotec.de">athoma@navotec.de</a>
+      </div>
+      <div class="contact-row">
+        <i class="ti ti-world" aria-hidden="true"></i>
+        <a href="https://www.navotec.de">www.navotec.de</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fade-up">
+    <p>&copy; 2026 Arkadius Thoma</p>
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
