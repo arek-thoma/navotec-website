@@ -7,12 +7,15 @@
   <meta name="description" content="Persönliche Website von Arkadius Thoma – IT Berater und Softwareentwickler mit Schwerpunkt ERP, Logistik und Azure Cloud, Nonnenhorn am Bodensee." />
   <meta name="keywords" content="Arkadius Thoma, IT Consultant, Entwickler, ERP, eEvolution, C#, SQL Server, Azure, Bodensee" />
 
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.navotec.de/" />
+
   <!-- Open Graph -->
   <meta property="og:title" content="Arkadius Thoma · navotec.de" />
   <meta property="og:description" content="IT Berater & Softwareentwickler · ERP & Logistik · Azure Cloud · Bodensee" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.navotec.de/" />
-  <meta property="og:image" content="foto.jpg" />
+  <meta property="og:image" content="https://www.navotec.de/foto.jpg" />
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -588,6 +591,38 @@
       <a href="datenschutz.html">Datenschutz</a>
     </div>
   </footer>
+
+  <!-- Strukturierte Daten (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Arkadius Thoma",
+    "url": "https://www.navotec.de",
+    "image": "https://www.navotec.de/foto.jpg",
+    "email": "athoma@navotec.de",
+    "jobTitle": "Senior Consultant & Senior Software Developer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "eEvolution Vertrieb GmbH",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hildesheim",
+        "addressCountry": "DE"
+      }
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Mauthausstr. 13",
+      "postalCode": "88149",
+      "addressLocality": "Nonnenhorn",
+      "addressCountry": "DE"
+    },
+    "knowsAbout": ["ERP", "Logistik", "EDI", "C#", ".NET", "SQL Server", "Azure", "eEvolution"],
+    "knowsLanguage": ["de", "en", "pl"],
+    "sameAs": ["https://www.navotec.de"]
+  }
+  </script>
 
   <script>
     const io = new IntersectionObserver((entries) => {
